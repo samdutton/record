@@ -1,0 +1,140 @@
+<slide class="segue dark nobackground">
+  <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
+  <hgroup class="auto-fadein">
+    <h2>The humble media element</h2>
+  </hgroup>
+  <aside class="note">
+  </aside>
+</slide>
+
+<slide class="nobackground">
+  <article  class="fill flexbox vcenter">
+    <pre class="quiteBig prettyprint" style="background: none; position: relative; top: 25px; left: 20px">&lt;video src='chrome.webm' /&gt;</code>
+  </article>
+  <aside class="note">
+    <p>This is a thing of simple beauty.</p>
+  </aside>
+</slide>
+
+<slide class="nobackground">
+  <hgroup>
+    <h2>85% support for &lt;video&gt; and &ltaudio&gt</h2>
+  </hgroup>
+  <article style="fill flexbox vcenter">
+    <img style="width: 740px" src="images/videosupport.png" alt="Browser support for audio and video elements" />
+  </article>
+  <footer class="source" style="left: 0; position: relative; top: 20px;">Source: <a href="http://http://www.jwplayer.com/html5/" title="caniuse.com">jwplayer.com/html5</a></footer>
+  <aside class="note">
+    <p>...and it has great support as well.</p>
+  </aside>
+</slide>
+
+<slide class="nobackground">
+  <article  class="fill flexbox vcenter">
+    <pre class="quiteBig prettyprint" style="background: none;position: relative; left: -84px" >&lt;video src='chrome.webm<b>#t=5,10</b>' /&gt;</pre>
+  </article>
+  <aside class="note">
+    <p>OK -- let's add to this a bit.</p>
+    <p>We can specify what range of the video we want to play.</p>
+    <p>This is called the Media Fragments, by the way.</p>
+    <p>That's nice, because you only need to download the part of the video you want to watch. That can save a lot of bandwidth and make your app feel more responsive.</p>
+    <p>Also enables you to deliver multiple views on the same video - chapters, so to speak - without having to encode and serve multiple files.</p>
+    <p>Again, this is really well supported on mobile and desktop -- though sadly not on iOS, last time I looked.</p>
+    <p>You need to make sure Range Requests are supported by your server: check for Accept Ranges: Bytes. By default for Apache and other servers, but worth checking</p>
+  </aside>
+</slide>
+
+<slide class="nobackground">
+  <article  class="fill flexbox vcenter">
+    <div class="demoLabel">Media Fragments API</div>
+  <div class="big"><a href="http://www.simpl.info/mf" title="Media Fragments demo">simpl.info/mf</a></div>
+  </article>
+  <aside class="note">
+  </aside>
+</slide>
+
+<slide class="nobackground">
+  <article class="fill flexbox vcenter">
+    <pre class="biggish prettyprint" style="background: none; line-height: 2em;">
+&lt;video&gt;
+  &lt;source src="chrome.webm" /&gt;
+  &lt;source src="chrome.mp4" /&gt;
+&lt;/video&gt;
+    </pre>
+  </article>
+  <aside class="note">
+    <p>Using the source element enables the browser to automatically select the video src with no hackery.</p>
+    <p>...and just two formats cover all the browsers that support the video element.</p>
+    <p>There used to be a bug on iOS where you had to include the .mp4 source first - don't need to worry about that now.</p>
+  </aside>
+</slide>
+
+<!-- <slide class="nobackground">
+  <article  class="fill flexbox vcenter">
+  <div class="big"><a href="http://www.simpl.info/video" title="Video sources demo">simpl.info/video</a></div>
+  </article>
+  <aside class="note">
+    <p>If you open this on Chrome and Safari, you'll see what I mean.</p>
+  </aside>
+</slide> -->
+
+<slide class="nobackground">
+  <article  class="fill flexbox vcenter">
+    <pre class="biggish prettyprint" style="background: none; margin: 2em auto 0 auto; width: 350px">
+video.<b>currentSrc</b>
+
+video.<b>videoWidth</b>
+
+video.<b>videoHeight</b>
+    </pre>
+  </article>
+  <aside class="note"><p>You can get the selected source and actual video width and height.</p></aside>
+</slide>
+
+<slide class="nobackground">
+  <article class="fill flexbox vcenter">
+    <pre class="biggish prettyprint" style="background: none; line-height: 2em;">
+&lt;video&gt;
+  &lt;source src="chrome.webm" <b>type="video/webm"</b> /&gt;
+  &lt;source src="chrome.mp4" <b>type="video/mp4"</b> /&gt;
+&lt;/video&gt;
+    </pre>
+  </article>
+  <aside class="note">
+  <p>The type attribute is optional</p>
+  <p>But... it gives us better performance because if the browser can't play the type, it won't download any of the file to check.</p>
+  <p>You can add specific codecs if you want.</p>
+</p></aside>
+</slide>
+
+<!-- <slide class="nobackground">
+  <article class="fill flexbox vcenter">
+    <pre class="biggish prettyprint" style="background: none; line-height: 2em;">
+&lt;video <b>poster="images/poster.jpg</b>"&gt;
+  &lt;source src="chrome.webm" type="video/webm" /&gt;
+  &lt;source src="chrome.mp4" type="video/mp4" /&gt;
+&lt;/video&gt;
+    </pre>
+  </article>
+  <aside class="note"><p>Don't forget the poster attribute which, again, is widely supported. A poster image means another download, but can be good for mobile, to show some content better than a blank screen or random thumbnail.</p></aside>
+</slide> -->
+
+<slide class="nobackground">
+  <article >
+    <pre class="biggish prettyprint" style="background: none; line-height: 2em;">
+&lt;video poster="images/poster.jpg"
+  <b>autoplay preload="metadata"</b>&gt;
+  &lt;source src="chrome.webm" type="video/webm" /&gt;
+  &lt;source src="chrome.mp4" type="video/mp4" /&gt;
+  &lt;p&gt;Video element not supported.&lt;/p&gt;
+&lt;/video&gt;
+    </pre>
+    <div><a href="http://stevesouders.com/tests/mediaevents.php" title="Steve Souders article about video preload buffer length">Steve Souders' preload test</a></div>
+  </article>
+  <aside class="note">
+    <p>OK - here's the full Monty!</p>
+    <p>Let's highlight two things that DON'T work on mobile...</p>
+<p>Firstly autoplay - you can't script playback control on mobile either.</p>
+<p>Secondly, no preload – which on desktop can be used to buffer video. (Check out Steve Souders' preload data page).</p>
+  </aside>
+</slide>
